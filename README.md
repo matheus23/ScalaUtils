@@ -56,23 +56,23 @@ The FileProperty automatically updates a Property when a File changes, using a g
 ```scala
 // This reads in all the text out of a File:
 object TextFileReader extends FilePropertyReader[String] {
-    def readFile(path: Path) = {
-        val source = new Source(path.toFile)
-        val text = source.mkString
-        source.close()
-        text
-    }
+def readFile(path: Path) = {
+  val source = Source.fromFile(path.toFile)
+  val text = source.mkString
+  source.close()
+  text
 }
-val textFile = Paths.get("file.txt")
+}
+val textFile = Paths.get("./file.txt")
 val watcher = new DirWatcher(textFile.getParent)
 // Create a FileProperty with is listenable, additionally:
 val property = new FileProperty[String](watcher, TextFileReader, textFile) with ListenableProperty[String]
 
 property.listen((prop: Property[String], value: String) => {
-    println("The contents of the text file are:")
-    println("==================================")
-    println(prop()) // Prints the text file content.
-}
+println("The contents of the text file are:")
+println("==================================")
+println(prop()) // Prints the text file content.
+})
 ```
 
 Before running this example, create a new file named "file.txt" in the working directory of this example.
