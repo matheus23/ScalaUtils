@@ -16,8 +16,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="scala-library-2.10.0" level="application" />
-    <orderEntry type="library" name="scalatest-2.10-1.9.1" level="application" />
     <orderEntry type="module" module-name="ScalaUtils" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/scalatest_2.10-1.9.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
