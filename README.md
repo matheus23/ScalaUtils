@@ -1,7 +1,6 @@
 # Scala Utilities
 <hr />
 ## Properties
-<hr />
 
 Properties are the idea of changing values. A property is simply wraps a value with getters and setters.
 The idea is to mix-in Utilities for Properties.
