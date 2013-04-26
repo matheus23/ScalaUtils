@@ -1,6 +1,7 @@
 package org.matheusdev
 
 import java.io.Closeable
+import vecmath.Vec2F
 
 /*
  * Created with IntelliJ IDEA.
@@ -40,4 +41,7 @@ package object util {
       case e: E => e.printStackTrace()
     }
   }
+
+  def simpleTypeName[T](implicit m: scala.reflect.Manifest[T]) = m.getClass.getSimpleName
+  def completeTypeName[T](implicit m: scala.reflect.Manifest[T]) = m.getClass.getName
 }

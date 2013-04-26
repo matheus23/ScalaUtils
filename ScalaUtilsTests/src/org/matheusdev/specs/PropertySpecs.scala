@@ -15,5 +15,6 @@ class PropertySpecs extends Specs(
   new LinkablePropertySpec,
   new DerivingPropertySpec,
   new ListenablePropertySpec,
-  new FilePropertySpec
+  new FilePropertySpec,
+  new AnimationPropertySpec
 )

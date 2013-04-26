@@ -14,8 +14,8 @@ trait TestUtilities {
   def waitFor(maxtime: Long)(wait: => Boolean): Boolean = {
     val startTime = System.currentTimeMillis()
     do {
-      val break = wait
-      if (break) return true
+      if (wait)
+        return true
       Thread.sleep(maxtime / 20)
     } while(System.currentTimeMillis()-startTime <= maxtime)
     false

@@ -3,6 +3,8 @@ package org.matheusdev.properties.tests
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
 import org.matheusdev.properties.{AnimationProperty, Property}
+import org.matheusdev.interpolators.Cubic
+import org.matheusdev.util.tests.TestUtilities
 
 /*
  * Created with IntelliJ IDEA.
@@ -10,17 +12,29 @@ import org.matheusdev.properties.{AnimationProperty, Property}
  * Date: 4/20/13
  * Time: 10:03 PM
  */
-class AnimationPropertySpec extends FlatSpec with ShouldMatchers {
+class AnimationPropertySpec extends FlatSpec with ShouldMatchers with TestUtilities {
 
   behavior of "An AnimationProperty"
 
+  val prop = new Property[Float](0f) with AnimationProperty
+  prop.period = 100
+  prop.interpolator = Cubic
+
   it should "slowly animate a floating point value" in {
-    val prop = new Property[Float](0f) with AnimationProperty
-    prop.period = 100
     prop(10f)
     prop() should not be (10f plusOrMinus 0.01f)
     Thread.sleep(110)
     prop() should be (10f plusOrMinus 0.01f)
+  }
+
+  it should "report, when the animation is over" in {
+    prop(20f)
+    Thread.sleep(110)
+    assert(prop.isFinished,
+      f"The animation didn't report 'isFinished': ${prop()}%f should be ${prop.dst}%f")
+    prop(20f)
+    assert(prop.isFinished,
+      f"The animation didn't report 'isFinished' after setting it to the same value: ${prop()}%f should be ${prop.dst}%f")
   }
 
 }

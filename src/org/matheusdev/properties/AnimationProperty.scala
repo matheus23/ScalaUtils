@@ -1,5 +1,7 @@
 package org.matheusdev.properties
 
+import org.matheusdev.interpolators.{Interpolator, Linear}
+
 
 /*
  * Created with IntelliJ IDEA.
@@ -12,6 +14,7 @@ trait AnimationProperty extends Property[Float] {
   var period = 0
   var time = System.currentTimeMillis()
   var dst = super.get()
+  var interpolator: Interpolator = Linear
 
   protected[properties] override def set(x: Float) = {
     dst = x
@@ -19,15 +22,19 @@ trait AnimationProperty extends Property[Float] {
     super.get()
   }
 
+  private def calculateTime() =
+    ((System.currentTimeMillis()-time) toFloat) / period
+
   protected[properties] override def get() = {
-    val deltaTime = ((System.currentTimeMillis()-time) toFloat)
-    val t = (deltaTime / period)
+    val t = calculateTime()
 
     if (t >= 1) {
       super.set(dst)
-      super.get()
     } else {
-      super.set((t * dst) + ((1-t) * super.get()))
+      super.set(interpolator(super.get(), dst, t))
     }
   }
+
+  def isFinished =
+    (super.get() == dst)
 }

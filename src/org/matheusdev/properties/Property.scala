@@ -19,7 +19,7 @@ class Property[T](initial: T) {
     value
   }
 
-  protected[properties] def set(x: T) = {
+  protected[properties] def set(x: T): T = {
     value = x
     value
   }
