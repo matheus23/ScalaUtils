@@ -26,7 +26,7 @@ abstract class Mat3[T](private val v: IndexedSeq[T])(implicit num: Fractional[T]
     num.zero, num.one,  num.zero,
     num.zero, num.zero, num.one)
 
-  protected def newMat(vs: IndexedSeq[T]): self
+  protected def newMat(vs: Seq[T]): self
   protected def newMat(vs: T*) = newMat(vs.toIndexedSeq)
 
   def val00 = v(Mat3.m00)
@@ -93,8 +93,8 @@ abstract class Mat3[T](private val v: IndexedSeq[T])(implicit num: Fractional[T]
 
   def *(vec: Vec3[T]) = scaled(vec.x, vec.y, vec.z)
 
-  def +(mat: Mat3[T]) = newMat(for (i <- v.indices) yield v(i) + mat(i))
-  def -(mat: Mat3[T]) = newMat(for (i <- v.indices) yield v(i) - mat(i))
+  def +(mat: Mat3[T]) = newMat(for (i <- v.indices) yield v(i) * mat(i))
+  def +(mat: Mat3[T]) = newMat(for (i <- v.indices) yield v(i) * mat(i))
 
   def scaled(x: T, y: T, z: T) = newMat(IndexedSeq(
     val00 * x, val01 * y, val02 * z,
