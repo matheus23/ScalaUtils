@@ -9,7 +9,7 @@ import scala.Fractional
  * Time: 8:34 PM
  */
 
-abstract class Vec2[T](val x: T, val y: T)(implicit num: Fractional[T]) extends Ordered[Vec2[T]] {
+abstract class Vec2[@specialized(Int, Long, Float, Double) T](val x: T, val y: T)(implicit num: Fractional[T]) extends Ordered[Vec2[T]] {
   def this(vec: Vec2[T])(implicit num: Fractional[T]) = this(vec.x, vec.y)
 
   type self

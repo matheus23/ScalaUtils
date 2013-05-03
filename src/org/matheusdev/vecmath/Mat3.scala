@@ -9,7 +9,7 @@ import scala.Fractional
  * Date: 4/26/13
  * Time: 4:35 PM
  */
-abstract class Mat3[T](private val v: IndexedSeq[T])(implicit num: Fractional[T]) {
+abstract class Mat3[@specialized(Int, Long, Float, Double) T](private val v: IndexedSeq[T])(implicit num: Fractional[T]) {
   if (v.length != 9)
     throw new IllegalArgumentException(s"Cannot create 3x3 matrix with other than 9 values: $v")
 

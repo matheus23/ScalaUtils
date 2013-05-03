@@ -9,7 +9,7 @@ import scala.Fractional
  * Time: 8:34 PM
  */
 
-abstract class Vec3[@specialized(Float, Double) T](val x: T, val y: T, val z: T)(implicit num: Fractional[T])
+abstract class Vec3[@specialized(Int, Long, Float, Double) T](val x: T, val y: T, val z: T)(implicit num: Fractional[T])
     extends Ordered[Vec3[T]] {
   def this(vec: Vec3[T])(implicit num: Fractional[T]) = this(vec.x, vec.y, vec.z)
 
