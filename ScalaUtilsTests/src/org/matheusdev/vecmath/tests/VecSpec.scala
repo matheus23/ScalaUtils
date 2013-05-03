@@ -16,7 +16,7 @@ class VecSpec extends FlatSpec with ShouldMatchers {
 
   it should "create properly and return values properly" in {
     val vec = new Vec2F(10, 10)
-    val (tx, ty) = vec.toTouple
+    val (tx, ty) = vec.toTuple
     tx should be (10)
     ty should be (10)
     vec.x should be (10)

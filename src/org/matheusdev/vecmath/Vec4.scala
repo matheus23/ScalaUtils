@@ -11,7 +11,7 @@ import scala.Fractional
 
 abstract class Vec4[@specialized(Float, Double) T](val x: T, val y: T, val z: T, val w: T)(implicit num: Fractional[T])
     extends Ordered[Vec4[T]] {
-  def this(vec: Vec4[T]) = this(vec.x, vec.y, vec.z, vec.w)
+  def this(vec: Vec4[T])(implicit num: Fractional[T]) = this(vec.x, vec.y, vec.z, vec.w)
 
   type self
   protected def sqrt(x: T): T

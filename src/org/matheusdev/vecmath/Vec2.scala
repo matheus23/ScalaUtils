@@ -9,8 +9,8 @@ import scala.Fractional
  * Time: 8:34 PM
  */
 
-abstract class Vec2[@specialized(Float, Double) T](val x: T, val y: T)(implicit num: Fractional[T]) extends Ordered[Vec2[T]] {
-  def this(vec: Vec2[T]) = this(vec.x, vec.y)
+abstract class Vec2[T](val x: T, val y: T)(implicit num: Fractional[T]) extends Ordered[Vec2[T]] {
+  def this(vec: Vec2[T])(implicit num: Fractional[T]) = this(vec.x, vec.y)
 
   type self
   protected def sqrt(x: T): T
@@ -44,7 +44,7 @@ abstract class Vec2[@specialized(Float, Double) T](val x: T, val y: T)(implicit 
   def perpLeft = newVec(num negate y, num negate x)
   def unary_- = newVec(num negate x, num negate y)
   def rotated(angle: Angle) = {
-    val rad = angle.toRadian
+    val rad = angle.radian
     val c = fromDouble(math.cos(rad))
     val s = fromDouble(math.sin(rad))
     newVec(x * c - y * s, x * s + y * c)

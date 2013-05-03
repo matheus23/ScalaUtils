@@ -9,19 +9,26 @@ package org.matheusdev.vecmath
 object Angle {
   val ToDegree = (180 / math.Pi)
   val ToRadian = (math.Pi / 180)
+
+  implicit def radianToDegree(r: Radian) = r.toDegree
+  implicit def degreeToRadian(d: Degree) = d.toRadian
+  implicit def angleToDegree(a: Angle) = a.toDegree
+  implicit def angleToRadian(a: Angle) = a.toRadian
 }
 sealed trait Angle {
   def value: Double
-  def toRadian: Double
-  def toDegree: Double
+  def toRadian: Radian
+  def toDegree: Degree
+  def radian = toRadian.value
+  def degree = toDegree.value
 }
 case class Radian(angle: Double) extends Angle {
   def value = angle
-  def toRadian = angle
-  def toDegree = angle * Angle.ToDegree
+  def toRadian = this
+  def toDegree = Degree(angle * Angle.ToDegree)
 }
 case class Degree(angle: Double) extends Angle {
   def value = angle
-  def toRadian = angle * Angle.ToRadian
-  def toDegree = angle
+  def toRadian = Radian(angle * Angle.ToRadian)
+  def toDegree = this
 }

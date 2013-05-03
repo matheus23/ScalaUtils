@@ -1,5 +1,8 @@
 package org.matheusdev.vecmath
 
+import scala.math.Numeric.Implicits._
+import scala.Fractional
+
 /*
  * Created with IntelliJ IDEA.
  * Author: matheusdev
@@ -12,22 +15,23 @@ abstract class Mat3[T](private val v: IndexedSeq[T])(implicit num: Fractional[T]
 
   type self
 
-  def this(vs: T*) = this(vs.toIndexedSeq)
+  def this(vs: T*)(implicit num: Fractional[T]) = this(vs.toIndexedSeq)
   def this(m00: T, m01: T, m02: T,
            m10: T, m11: T, m12: T,
-           m20: T, m21: T, m22: T) =
+           m20: T, m21: T, m22: T)
+          (implicit num: Fractional[T]) =
     this(IndexedSeq(
       m00, m01, m02,
       m10, m11, m12,
       m20, m21, m22
     ))
-  def this() = this(
+  def this()(implicit num: Fractional[T]) = this(
     num.one,  num.zero, num.zero,
     num.zero, num.one,  num.zero,
     num.zero, num.zero, num.one)
 
-  protected def newMat(vs: Seq[T]): self
-  protected def newMat(vs: T*) = newMat(vs.toIndexedSeq)
+  protected def newMat(vs: IndexedSeq[T]): self
+  protected def newMat(vs: T*): self = newMat(vs.toIndexedSeq)
 
   def val00 = v(Mat3.m00)
   def val01 = v(Mat3.m01)
@@ -41,9 +45,14 @@ abstract class Mat3[T](private val v: IndexedSeq[T])(implicit num: Fractional[T]
   def val21 = v(Mat3.m21)
   def val22 = v(Mat3.m22)
 
-  def apply(ind: Int) = apply(ind, 0)
-  def apply(x: Int, y: Int) = v.applyOrElse(y * 3 + x,
-    ind => throw new IndexOutOfBoundsException(s"Index out of 3x3 bounds: $ind (x: $x, y: $y)"))
+  def apply(ind: Int): T = apply(ind, 0)
+  def apply(x: Int, y: Int) = {
+    val index = y * 3 + x
+    if (v.isDefinedAt(index))
+      v(index)
+    else
+      throw new IndexOutOfBoundsException(s"Index out of 3x3 bounds: $index (x: $x, y: $y)")
+  }
 
   def transposed = newMat(IndexedSeq(
     val00, val10, val20,
