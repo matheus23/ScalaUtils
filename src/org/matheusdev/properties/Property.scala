@@ -8,7 +8,7 @@ import collection.mutable.ListBuffer
  * Date: 3/18/13
  * Time: 7:08 PM
  */
-class Property[T](initial: T) {
+class Property[T](initial: T) extends (() => T) with (T => T) {
 
   private var value = initial
 
@@ -24,6 +24,6 @@ class Property[T](initial: T) {
     value
   }
 
-  override def toString = value.toString
+  override def toString() = get().toString
 
 }
