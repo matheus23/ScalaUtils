@@ -42,6 +42,17 @@ package object util {
     }
   }
 
+  def periodically(fps: Int)(op: => Boolean) {
+    val sync = new Sync {
+      def getTime: Long = System.nanoTime()
+    }
+    var shouldRun = true
+    while (shouldRun) {
+      shouldRun = op
+      sync.sync(fps)
+    }
+  }
+
   def simpleTypeName[T](implicit m: scala.reflect.Manifest[T]) = m.getClass.getSimpleName
   def completeTypeName[T](implicit m: scala.reflect.Manifest[T]) = m.getClass.getName
 }
