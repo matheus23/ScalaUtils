@@ -36,5 +36,5 @@ trait AnimationProperty extends Property[Float] {
   }
 
   def isFinished =
-    (super.get() == dst)
+    (get() == dst)
 }
