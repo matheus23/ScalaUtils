@@ -24,6 +24,9 @@ trait LinkableProperty[T] extends Property[T] {
     super.get()
   }
 
+  def <== (property: Property[T]) =
+    link(property)
+
   def link(property: Property[T]) = {
     linking = Some(property)
     this

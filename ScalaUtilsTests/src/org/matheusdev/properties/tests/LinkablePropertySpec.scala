@@ -35,4 +35,10 @@ class LinkablePropertySpec extends FlatSpec with ShouldMatchers {
     linked() should be (100)
   }
 
+  it should "have the <== alias for link()" in {
+    linked <== prop
+    prop(20)
+    linked() should be (20)
+  }
+
 }
