@@ -46,5 +46,6 @@ object FastClusteredMapping2 {
       throw new IllegalArgumentException(s"Only accepting power of two values for $name: $x")
     else x
   }
-  def logBase2(x: Int) = (math.log(x) / math.log(2)).toInt
+  private val log2 = math.log(2)
+  def logBase2(x: Int) = (math.log(x) / log2).toInt
 }
