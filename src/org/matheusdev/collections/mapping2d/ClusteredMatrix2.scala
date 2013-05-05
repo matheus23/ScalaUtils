@@ -10,6 +10,7 @@ class ClusteredMatrix2[@specialized E: Manifest](
   val width: Int, val height: Int, val clusterWidth: Int, val clusterHeight: Int, val mapping: Mapping2)
   extends ArrayMatrix2[E] {
 
+  @deprecated("use FastClusteredMatrix2 instead.")
   def this(width: Int, height: Int, clusterWidth: Int, clusterHeight: Int) =
     this(width, height, clusterWidth, clusterHeight,
       new ClusteredMapping2(width, height, clusterWidth, clusterHeight))
