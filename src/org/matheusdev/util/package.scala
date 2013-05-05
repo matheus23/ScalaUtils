@@ -1,7 +1,9 @@
 package org.matheusdev
 
 import java.io.Closeable
-import vecmath.Vec2F
+import java.util.concurrent.{Callable, ExecutorService, TimeUnit, Executors}
+
+import scala.collection.JavaConversions._
 
 /*
  * Created with IntelliJ IDEA.
@@ -51,6 +53,31 @@ package object util {
       shouldRun = op
       sync.sync(fps)
     }
+  }
+
+  private class IndexRunnable(val index: Int, val numThreads: Int, val length: Int, val op: Int => Unit) extends Callable[Unit] {
+    def call() {
+      var i = index
+      while (i < length) {
+        op(i)
+        i += numThreads
+      }
+    }
+  }
+
+  private val indexIterationThreadNum = Runtime.getRuntime.availableProcessors()
+  private val indexIterationExecutors = Executors.newFixedThreadPool(indexIterationThreadNum)
+
+  def parallelIndexIteration(length: Int, timeoutMs: Long,
+    numThreads: Int = indexIterationThreadNum,
+    executor: ExecutorService = indexIterationExecutors)(op: Int => Unit) {
+
+    val tasks: java.util.List[Callable[Unit]] =
+      (for (thread <- 0 until numThreads) yield {
+        new IndexRunnable(thread, numThreads, length, op)
+      })
+
+    executor.invokeAll(tasks)
   }
 
   def simpleTypeName[T](implicit m: scala.reflect.Manifest[T]) = m.getClass.getSimpleName

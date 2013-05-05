@@ -15,7 +15,8 @@ class SingleMappedMatrix2[@specialized E: Manifest](
   def this(width: Int, height: Int) =
     this(width, height, new LinearMapping2(width, height))
 
-  protected val backingArray = new Array[E](width * height)
+  protected val arraySize = width * height
+  protected val backingArray = new Array[E](arraySize)
 
   def posToIndex(x: Int, y: Int) = mapping.posToIndex(x, y)
   def indexToPos(ind: Int) = mapping.indexToPos(ind)

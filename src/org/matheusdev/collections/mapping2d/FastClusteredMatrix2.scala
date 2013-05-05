@@ -11,7 +11,8 @@ class FastClusteredMatrix2[@specialized E: Manifest](
   extends ArrayMatrix2[E] {
 
   val mapping = new FastClusteredMapping2(width, height, clusterWidth, clusterHeight)
-  protected val backingArray = new Array[E](width * height)
+  protected val arraySize = width * height
+  protected val backingArray = new Array[E](arraySize)
 
   def posToIndex(x: Int, y: Int) = mapping.posToIndex(x, y)
   def indexToPos(ind: Int) = mapping.indexToPos(ind)

@@ -1,14 +1,18 @@
 package org.matheusdev.collections.mapping2d
 
+import org.matheusdev.collections.MapProduce2
+import org.matheusdev.util._
+
 /*
  * Created with IntelliJ IDEA.
  * Author: matheusdev
  * Date: 5/4/13
  * Time: 4:38 PM
  */
-trait Matrix2[E] extends ((Int,Int) => E) with Mapping2 {
+trait Matrix2[E] extends ((Int,Int) => E) with Mapping2 with MapProduce2[E] {
   val width: Int
   val height: Int
+  protected val arraySize: Int
   def zippedLinearIterator: Iterator[(E,Int)]
 
   def apply(x: Int, y: Int) = checkedGet(x, y)
@@ -42,4 +46,13 @@ trait Matrix2[E] extends ((Int,Int) => E) with Mapping2 {
       arraySet(index)(op(x, y, e))
     }
   }
+
+  def parMap(timeoutMs: Int)(op: (Int,Int,E) => E) {
+    parallelIndexIteration(arraySize, timeoutMs) { i =>
+      val (x, y) = indexToPos(i)
+      arraySet(i)(op(x, y, arrayGet(i)))
+    }
+  }
+
+  def setAt(x: Int, y: Int, to: E) = update(x, y, to)
 }

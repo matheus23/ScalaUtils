@@ -15,7 +15,8 @@ class ClusteredMatrix2[@specialized E: Manifest](
     this(width, height, clusterWidth, clusterHeight,
       new ClusteredMapping2(width, height, clusterWidth, clusterHeight))
 
-  protected val backingArray = new Array[E]((width / clusterWidth) * (height / clusterHeight) * (clusterWidth * clusterHeight))
+  protected val arraySize = (width / clusterWidth) * (height / clusterHeight) * (clusterWidth * clusterHeight)
+  protected val backingArray = new Array[E](arraySize)
 
   def posToIndex(x: Int, y: Int) = mapping.posToIndex(x, y)
   def indexToPos(ind: Int) = mapping.indexToPos(ind)
