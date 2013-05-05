@@ -1,8 +1,8 @@
-[org.matheusdev.properties]: https://github.com/matheus23/ScalaUtils/tree/master/ScalaUtils/src/org/matheusdev/properties "org.matheusdev.properties"
-[org.matheusdev.collections.mapping2d]: https://github.com/matheus23/ScalaUtils/tree/master/ScalaUtils/src/org/matheusdev/collections/mapping2d "org.matheusdev.collections.mapping2d"
-[org.matheusdev.interpolators]: https://github.com/matheus23/ScalaUtils/tree/master/ScalaUtils/src/org/matheusdev/interpolators "org.matheusdev.interpolators"
-[org.matheusdev.vecmath]: https://github.com/matheus23/ScalaUtils/tree/master/ScalaUtils/src/org/matheusdev/vecmath "org.matheusdev.vecmath"
-[org.matheusdev.util]: https://github.com/matheus23/ScalaUtils/tree/master/ScalaUtils/src/org/matheusdev/util "org.matheusdev.util"
+[org.matheusdev.properties]: https://github.com/matheus23/ScalaUtils/tree/master/src/org/matheusdev/properties "org.matheusdev.properties"
+[org.matheusdev.collections.mapping2d]: https://github.com/matheus23/ScalaUtils/tree/master/src/org/matheusdev/collections/mapping2d "org.matheusdev.collections.mapping2d"
+[org.matheusdev.interpolators]: https://github.com/matheus23/ScalaUtils/tree/master/src/org/matheusdev/interpolators "org.matheusdev.interpolators"
+[org.matheusdev.vecmath]: https://github.com/matheus23/ScalaUtils/tree/master/src/org/matheusdev/vecmath "org.matheusdev.vecmath"
+[org.matheusdev.util]: https://github.com/matheus23/ScalaUtils/tree/master/src/org/matheusdev/util "org.matheusdev.util"
 
 # Scala Utilities
 <hr />
