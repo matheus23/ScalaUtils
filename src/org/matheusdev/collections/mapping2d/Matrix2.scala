@@ -1,4 +1,4 @@
-package org.matheusdev.collections
+package org.matheusdev.collections.mapping2d
 
 /*
  * Created with IntelliJ IDEA.
@@ -6,16 +6,13 @@ package org.matheusdev.collections
  * Date: 5/4/13
  * Time: 4:38 PM
  */
-trait Matrix2[E] extends ((Int,Int) => E) {
+trait Matrix2[E] extends ((Int,Int) => E) with Mapping2 {
   val width: Int
   val height: Int
+  def zippedLinearIterator: Iterator[(E,Int)]
 
   def apply(x: Int, y: Int) = checkedGet(x, y)
-  def update(x: Int, y: Int)(e: E) = checkedSet(x, y)(e)
-
-  // Mother of the Matrix2:
-  protected def posToIndex(x: Int, y: Int): Int
-  protected def indexToPos(ind: Int): (Int,Int)
+  def update(x: Int, y: Int, e: E) = checkedSet(x, y)(e)
 
   protected def checkedGet(x: Int, y: Int) = withRangeCheck(x, y)(arrayGet(posToIndex(x, y)))
   protected def arrayGet(ind: Int): E
@@ -31,6 +28,18 @@ trait Matrix2[E] extends ((Int,Int) => E) {
       throw new ArrayIndexOutOfBoundsException(s"position ($x, $y) is out of range ($width, $height)")
 
   def foreach(op: (Int,Int,E) => Unit) {
+    val itr = zippedLinearIterator
+    for ((e, index) <- itr) {
+      val (x, y) = indexToPos(index)
+      op(x, y, e)
+    }
+  }
 
+  def map(op: (Int,Int,E) => E) {
+    val itr = zippedLinearIterator
+    for ((e, index) <- itr) {
+      val (x, y) = indexToPos(index)
+      arraySet(index)(op(x, y, e))
+    }
   }
 }
