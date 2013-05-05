@@ -10,8 +10,8 @@
 ## Index
 
 If you want to know about specific stuff, which sounds interesting to you, navigate with the following links:
- * [org.matheusdev.properties: The Idea of Mutable values changing everywhere][org.matheusdev.properties]
- * [org.matheusdev.collections.mapping2d: Mapping 2D positions to a 1D array. The cracy way.][org.matheusdev.collections.mapping2d]
- * [org.matheusdev.interpolators: Interpolation utilities. Includes Linear, Cubic or Sinus interpolation functions.][org.matheusdev.interpolators]
- * [org.matheusdev.vecmath: A collection of **generic** Vector math utilities. Includes classes like Vec2[Float/Double] or Mat3[Float/Double]][org.matheusdev.vecmath]
- * [org.matheusdev.util: Single method utilities like 'measureTimeMs' or 'withClose' or 'periodically(fps)' and other single-class Utilities][org.matheusdev.util]
+ * [org.matheusdev.properties][org.matheusdev.properties]: The Idea of Mutable values changing everywhere]
+ * [org.matheusdev.collections.mapping2d][org.matheusdev.collections.mapping2d]: Mapping 2D positions to a 1D array. The cracy way.
+ * [org.matheusdev.interpolators][org.matheusdev.interpolators]: Interpolation utilities. Includes Linear, Cubic or Sinus interpolation functions.
+ * [org.matheusdev.vecmath][org.matheusdev.vecmath]: A collection of **generic** Vector math utilities. Includes classes like Vec2[Float/Double] or Mat3[Float/Double]
+ * [org.matheusdev.util][org.matheusdev.util]: Single method utilities like 'measureTimeMs' or 'withClose' or 'periodically(fps)' and other single-class Utilities
