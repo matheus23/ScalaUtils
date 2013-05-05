@@ -12,9 +12,9 @@ import org.matheusdev.interpolators.{Interpolator, Linear}
 trait AnimationProperty extends Property[Float] {
 
   var period = 0
-  var time = System.currentTimeMillis()
-  var dst = super.get()
   var interpolator: Interpolator = Linear
+  private var time = System.currentTimeMillis()
+  private var dst = super.get()
 
   protected[properties] override def set(x: Float) = {
     dst = x
