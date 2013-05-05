@@ -49,7 +49,7 @@ println(propertyA()) // Prints "The doubled value is: 20"
 ### FileProperty
 <hr />
 
-Well, but this is **so low level**. Now let's see the pure awesome-ness of the FileProperty!
+Well, but the above examples of Properties are **so low level**. Now let's see the pure awesome-ness of the FileProperty!
 The FileProperty automatically updates a Property when a File changes, using a given FilePropertyReader:
 ```scala
 // This reads in all the text out of a File:
