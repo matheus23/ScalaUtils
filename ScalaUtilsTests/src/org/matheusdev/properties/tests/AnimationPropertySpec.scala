@@ -31,10 +31,10 @@ class AnimationPropertySpec extends FlatSpec with ShouldMatchers with TestUtilit
     prop(20f)
     Thread.sleep(110)
     assert(prop.isFinished,
-      f"The animation didn't report 'isFinished': ${prop()}%f should be ${prop.dst}%f")
+      f"The animation didn't report 'isFinished': ${prop()}%f should be ${20f}%f")
     prop(20f)
     assert(prop.isFinished,
-      f"The animation didn't report 'isFinished' after setting it to the same value: ${prop()}%f should be ${prop.dst}%f")
+      f"The animation didn't report 'isFinished' after setting it to the same value: ${prop()}%f should be ${20f}%f")
   }
 
 }
