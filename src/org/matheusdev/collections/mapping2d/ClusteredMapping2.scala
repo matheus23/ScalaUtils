@@ -7,7 +7,6 @@ package org.matheusdev.collections.mapping2d
  * Time: 9:53 PM
  */
 // Yet, test results fail...
-@deprecated("use FastClusteredMapping2 instead.")
 class ClusteredMapping2(
   val width: Int,
   val height: Int,
@@ -18,7 +17,7 @@ class ClusteredMapping2(
 
   def this(width: Int, height: Int, clusterWidth: Int, clusterHeight: Int) =
     this(width, height, clusterWidth, clusterHeight,
-      new LinearMapping2(width/clusterWidth, height/clusterHeight),
+      new LinearMapping2(width / clusterWidth, height / clusterHeight),
       new LinearMapping2(clusterWidth, clusterHeight))
 
   private val indicesInCluster = clusterWidth * clusterHeight
