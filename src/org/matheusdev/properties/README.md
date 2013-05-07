@@ -119,7 +119,7 @@ This property is useful for example for uploading arrays of vertices to the GPU,
 class PropertyVec(arr: Array[Float], index: Int, initx: Float, inity: Float) {
   val x: Property[Float] = new ArrayBackedProperty[Float](arr, index*2)
   val y: Property[Float] = new ArrayBackedProperty[Float](arr, index*2+1)
-  def translate(tx: Float, ty: Float) = (x(tx), y(ty))
+  def translate(tx: Float, ty: Float) = (x(x() + tx), y(y() + ty))
   x(initx)
   y(inity)
 }
