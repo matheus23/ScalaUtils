@@ -65,8 +65,8 @@ package object util {
     }
   }
 
-  private val indexIterationThreadNum = Runtime.getRuntime.availableProcessors()
-  private val indexIterationExecutors = Executors.newFixedThreadPool(indexIterationThreadNum)
+  private lazy val indexIterationThreadNum = Runtime.getRuntime.availableProcessors()
+  private lazy val indexIterationExecutors = Executors.newFixedThreadPool(indexIterationThreadNum)
 
   def parallelIndexIteration(length: Int, timeoutMs: Long,
     numThreads: Int = indexIterationThreadNum,
