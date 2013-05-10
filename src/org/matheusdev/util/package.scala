@@ -13,6 +13,12 @@ import scala.collection.JavaConversions._
  */
 package object util {
 
+  def snapFloat(float: Float, to: Float) =
+    math.round(float / to) * to
+
+  def snapDouble(double: Double, to: Double) =
+    math.round(double / to) * to
+
   def withCloseable[T <: Closeable, R](c: T)(action: T => R): R = {
     try {
       action(c)

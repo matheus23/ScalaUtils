@@ -20,7 +20,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/scalatest_2.10-1.9.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../TopDown/BuildingTests/lib/scalatest_2.10-1.9.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
