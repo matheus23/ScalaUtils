@@ -6,7 +6,7 @@ package org.matheusdev.vecmath
  * Date: 4/26/13
  * Time: 7:01 PM
  */
-class Mat3F(v: IndexedSeq[Float]) extends Mat3[Float] {
+class Mat3f(v: IndexedSeq[Float]) extends Mat3[Float] {
   def this(vs: Float*) = this(vs.toIndexedSeq)
   def this(m00: Float, m01: Float, m02: Float,
            m10: Float, m11: Float, m12: Float,
@@ -21,6 +21,6 @@ class Mat3F(v: IndexedSeq[Float]) extends Mat3[Float] {
     0, 1, 0,
     0, 0, 1)
 
-  type self = Mat3F
-  protected def newMat(vs: IndexedSeq[Float]) = new Mat3F(vs)
+  type self = Mat3f
+  protected def newMat(vs: IndexedSeq[Float]) = new Mat3f(vs)
 }

@@ -6,14 +6,14 @@ package org.matheusdev.vecmath
  * Date: 4/26/13
  * Time: 12:00 AM
  */
-class Vec3D(x: Double, y: Double, z: Double) extends Vec3[Double](x, y, z) {
-  type self = Vec3D
+class Vec3d(x: Double, y: Double, z: Double) extends Vec3[Double](x, y, z) {
+  type self = Vec3d
   protected def sqrt(x: Double): Double = math.sqrt(x)
-  protected def newVec(x: Double, y: Double, z: Double): self = new Vec3D(x, y, z)
+  protected def newVec(x: Double, y: Double, z: Double): self = new Vec3d(x, y, z)
   protected def typeName = "Double"
   protected def fromDouble(x: Double) = x
 }
 
-object Vec3D {
-  def apply(x: Double, y: Double, z: Double) = new Vec3D(x, y, z)
+object Vec3d {
+  def apply(x: Double, y: Double, z: Double) = new Vec3d(x, y, z)
 }
