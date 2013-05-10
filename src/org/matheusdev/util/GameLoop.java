@@ -17,7 +17,6 @@ public class GameLoop implements Runnable {
 
 	protected final GameLooper looper;
 	protected final Type type;
-	protected final long framerate;
 	protected FpsUpdater fps;
 	protected FpsUpdater ups;
 
@@ -25,6 +24,7 @@ public class GameLoop implements Runnable {
 	protected volatile boolean paused;
 	protected Thread runner;
 	protected ThreadGroup group;
+	protected long framerate;
 
 	public GameLoop(GameLooper looper, Type type, long framerate) {
 		this.looper = looper;
@@ -147,5 +147,9 @@ public class GameLoop implements Runnable {
 
 	public FpsUpdater getUps() {
 		return ups;
+	}
+
+	public void setFramerate(long framerate) {
+		this.framerate = framerate;
 	}
 }
