@@ -2,7 +2,7 @@ package org.matheusdev.properties.tests
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FlatSpec
-import org.matheusdev.properties.{AnimationProperty, Property}
+import org.matheusdev.properties.{AnimationPropertyFloat, Property}
 import org.matheusdev.interpolators.Cubic
 import org.matheusdev.util.tests.TestUtilities
 
@@ -14,9 +14,9 @@ import org.matheusdev.util.tests.TestUtilities
  */
 class AnimationPropertySpec extends FlatSpec with ShouldMatchers with TestUtilities {
 
-  behavior of "An AnimationProperty"
+  behavior of "An AnimationPropertyFloat"
 
-  val prop = new Property[Float](0f) with AnimationProperty
+  val prop = new Property[Float](0f) with AnimationPropertyFloat
   prop.period = 100
   prop.interpolator = Cubic
 

@@ -36,7 +36,7 @@ class VecSpec extends FlatSpec with ShouldMatchers {
     val vec0 = new Vec2[Float](10, 10)
     val vec1 = new Vec2[Float](10, 10)
     val result = vec0 + vec1
-    assert(result ne vec0, "Vec2f isn't immutable!")
+    assert(result ne vec0, it + " isn't immutable!")
   }
 
   def testNorm(vec: Vec2[Float], expected: Vec2[Float]) = {
@@ -49,7 +49,7 @@ class VecSpec extends FlatSpec with ShouldMatchers {
   }
 
   "A Vec2[String]" should "do very, very fun stuff!!! :D" in {
-    val vec = new Vec2[String]("x", "y")(org.matheusdev.numerics.StringIsMathNumeric.StringMathNumeric)
+    val vec = new Vec2[String]("x", "y")(org.matheusdev.numerics.StringIsMathFractional.StringMathFractional)
     (vec.normalized) should be
       ("Vec2(x / sqrt(x * x + y * y), y / sqrt(x * x + y * y))")
     ((vec.normalized * "scale").length) should be
