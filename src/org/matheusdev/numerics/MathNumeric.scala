@@ -10,6 +10,9 @@ object MathNumeric {
   
   @deprecated("This is currently a stub, only to make it possible. It casts to doubles and back to BigDecimals, which are not exact operations.")
   trait BigDecimalIsMathNumeric extends MathNumeric[BigDecimal] {
+    val Pi = BigDecimal(math.Pi)
+    val E = BigDecimal(math.E)
+
     def acos(x: BigDecimal) = BigDecimal(math.acos(x.doubleValue()))
     def asin(x: BigDecimal) = BigDecimal(math.asin(x.doubleValue()))
     def atan(x: BigDecimal) = BigDecimal(math.atan(x.doubleValue()))
@@ -50,6 +53,9 @@ object MathNumeric {
   }
   
   trait FloatIsMathNumeric extends MathNumeric[Float] {
+    val Pi = math.Pi.toFloat
+    val E = math.E.toFloat
+
     def acos(x: Float) = math.acos(x).toFloat
     def asin(x: Float) = math.asin(x).toFloat
     def atan(x: Float) = math.atan(x).toFloat
@@ -87,6 +93,9 @@ object MathNumeric {
   implicit object FloatIsMathNumeric extends FloatIsMathNumeric with FloatIsFractional with Ordering.FloatOrdering
 
   trait DoubleIsMathNumeric extends MathNumeric[Double] {
+    val Pi = math.Pi
+    val E = math.E
+
     def acos(x: Double) = math.acos(x)
     def asin(x: Double) = math.asin(x)
     def atan(x: Double) = math.atan(x)
@@ -124,6 +133,9 @@ object MathNumeric {
   implicit object DoubleIsMathNumeric extends DoubleIsMathNumeric with DoubleIsFractional with Ordering.DoubleOrdering
   
   trait IntIsMathNumeric extends MathNumeric[Int] {
+    val Pi = math.Pi.toInt
+    val E = math.E.toInt
+
     def div(x: Int, y: Int) = (x / y)
     def acos(x: Int) = math.acos(x).toInt
     def asin(x: Int) = math.asin(x).toInt
@@ -162,6 +174,9 @@ object MathNumeric {
   implicit object IntIsMathNumeric extends IntIsMathNumeric with IntIsIntegral with Ordering.IntOrdering
 
   trait LongIsMathNumeric extends MathNumeric[Long] {
+    val Pi = math.Pi.toLong
+    val E = math.E.toLong
+
     def div(x: Long, y: Long) = (x / y)
     def acos(x: Long) = math.acos(x).toLong
     def asin(x: Long) = math.asin(x).toLong
@@ -200,6 +215,9 @@ object MathNumeric {
   implicit object LongIsMathNumeric extends LongIsMathNumeric with LongIsIntegral with Ordering.LongOrdering
 
   trait ShortIsMathNumeric extends MathNumeric[Short] {
+    val Pi = math.Pi.toChar
+    val E = math.E.toChar
+
     def div(x: Short, y: Short) = (x / y).toShort
     def acos(x: Short) = math.acos(x).toShort
     def asin(x: Short) = math.asin(x).toShort
@@ -238,6 +256,9 @@ object MathNumeric {
   implicit object ShortIsMathNumeric extends ShortIsMathNumeric with ShortIsIntegral with Ordering.ShortOrdering
 
   trait CharIsMathNumeric extends MathNumeric[Char] {
+    val Pi = math.Pi.toChar
+    val E = math.E.toChar
+
     def div(x: Char, y: Char) = (x / y).toChar
     def acos(x: Char) = math.acos(x).toChar
     def asin(x: Char) = math.asin(x).toChar
@@ -276,6 +297,9 @@ object MathNumeric {
   implicit object CharIsMathNumeric extends CharIsMathNumeric with CharIsIntegral with Ordering.CharOrdering
 
   trait ByteIsMathNumeric extends MathNumeric[Byte] {
+    val Pi = math.Pi.toByte
+    val E = math.E.toByte
+
     def div(x: Byte, y: Byte) = (x / y).toByte
     def acos(x: Byte) = math.acos(x).toByte
     def asin(x: Byte) = math.asin(x).toByte
@@ -315,6 +339,9 @@ object MathNumeric {
 }
 
 trait MathNumeric[T] extends Numeric[T] {
+  val Pi: T
+  val E: T
+
   def div(x: T, y: T): T
   def acos(x: T): T
   def asin(x: T): T
@@ -342,7 +369,7 @@ trait MathNumeric[T] extends Numeric[T] {
   def toDegrees(x: T): T
   def toRadians(x: T): T
   def ulp(x: T): T
-  
+
   def fromByte(x: Byte): T
   def fromShort(x: Short): T
   def fromChar(x: Char): T
