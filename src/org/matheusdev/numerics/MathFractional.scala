@@ -16,7 +16,7 @@ object MathFractional {
 
     def acos(x: BigDecimal) = BigDecimal(math.acos(x.doubleValue()))
     def asin(x: BigDecimal) = BigDecimal(math.asin(x.doubleValue()))
-    def atan(x: BigDecimal) = BigDecimal(math.atan(x.doubleValue()))
+    def atan(x: BigDecimal) = BigFunctions.arctan(x.bigDecimal, 1)
     def atan2(x: BigDecimal, y: BigDecimal) = BigDecimal(math.atan2(x.doubleValue(), y.doubleValue()))
     def sin(x: BigDecimal) = BigDecimal(math.sin(x.doubleValue()))
     def sinh(x: BigDecimal) = BigDecimal(math.sinh(x.doubleValue()))
@@ -26,17 +26,17 @@ object MathFractional {
     def tanh(x: BigDecimal) = BigDecimal(math.tanh(x.doubleValue()))
     def cbrt(x: BigDecimal) = BigDecimal(math.cbrt(x.doubleValue()))
     def ceil(x: BigDecimal) = BigDecimal(math.ceil(x.doubleValue()))
-    def exp(x: BigDecimal) = BigDecimal(math.exp(x.doubleValue()))
+    def exp(x: BigDecimal) = BigFunctions.exp(x.bigDecimal, 1)
     def expm1(x: BigDecimal) = BigDecimal(math.expm1(x.doubleValue()))
     def floor(x: BigDecimal) = BigDecimal(math.floor(x.doubleValue()))
     def hypot(x: BigDecimal, y: BigDecimal) = BigDecimal(math.hypot(x.doubleValue(), y.doubleValue()))
-    def log(x: BigDecimal) = BigDecimal(math.log(x.doubleValue()))
-    def log10(x: BigDecimal) = BigDecimal(math.log10(x.doubleValue()))
-    def log1p(x: BigDecimal) = BigDecimal(math.log1p(x.doubleValue()))
+    def log(x: BigDecimal) = BigFunctions.ln(x.bigDecimal, 1)
+    def log10(x: BigDecimal) = BigFunctions.ln(x.bigDecimal, 1)
+    def log1p(x: BigDecimal) = BigFunctions.ln((x + 1).bigDecimal, 1)
     def pow(x: BigDecimal, y: BigDecimal) = BigDecimal(math.pow(x.doubleValue(), y.doubleValue()))
     def rint(x: BigDecimal) = BigDecimal(math.rint(x.doubleValue()))
     def round(x: BigDecimal) = x.round(x.mc)
-    def sqrt(x: BigDecimal) = BigDecimal(math.sqrt(x.doubleValue()))
+    def sqrt(x: BigDecimal) = BigFunctions.sqrt(x.bigDecimal, 1)
     def toDegrees(x: BigDecimal) = x * BigDecimalIsMathFractional.toDegree
     def toRadians(x: BigDecimal) = x * BigDecimalIsMathFractional.toRadians
     def ulp(x: BigDecimal) = x.ulp
