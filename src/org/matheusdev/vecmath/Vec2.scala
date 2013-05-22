@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import scala.Fractional
+import org.matheusdev.numerics.MathNumeric
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,49 +9,42 @@ import scala.Fractional
  * Time: 8:34 PM
  */
 
-abstract class Vec2[@specialized(Int, Long, Float, Double) T](val x: T, val y: T)(implicit num: Fractional[T]) extends Ordered[Vec2[T]] {
-  def this(vec: Vec2[T])(implicit num: Fractional[T]) = this(vec.x, vec.y)
+class Vec2[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val y: T)(implicit mathN: MathNumeric[T]) extends Ordered[Vec2[T]] {
+  def this(vec: Vec2[T])(implicit mathN: MathNumeric[T]) = this(vec.x, vec.y)
 
-  type self
-  protected def sqrt(x: T): T
-  protected def newVec(x: T, y: T): self
-  protected def typeName: String
-  protected def fromDouble(d: Double): T
-
-  import Numeric.Implicits._
-  import num.mkNumericOps
+  import mathN.mkMathNumericOps
 
   def toTuple = (x, y)
-  override def toString = s"Vec2[$typeName]($x, $y)"
+  override def toString = s"Vec2($x, $y)"
 
-  def +(v: Vec2[T]) = newVec(x + v.x, y + v.y)
-  def -(v: Vec2[T]) = newVec(x - v.x, y - v.y)
-  def *(v: Vec2[T]) = newVec(x * v.x, y * v.y)
-  def /(v: Vec2[T]) = newVec(x / v.x, y / v.y)
+  def +(v: Vec2[T]) = new Vec2(x + v.x, y + v.y)
+  def -(v: Vec2[T]) = new Vec2(x - v.x, y - v.y)
+  def *(v: Vec2[T]) = new Vec2(x * v.x, y * v.y)
+  def /(v: Vec2[T]) = new Vec2(x / v.x, y / v.y)
   def dot(v: Vec2[T]) = x * v.x + y * v.y
   def cross(v: Vec2[T]) = x * v.y - y * v.x
   
-  def +(v: T) = newVec(x + v, y + v)
-  def -(v: T) = newVec(x - v, y - v)
-  def *(v: T) = newVec(x * v, y * v)
-  def /(v: T) = newVec(x / v, y / v)
+  def +(v: T) = new Vec2(x + v, y + v)
+  def -(v: T) = new Vec2(x - v, y - v)
+  def *(v: T) = new Vec2(x * v, y * v)
+  def /(v: T) = new Vec2(x / v, y / v)
 
   def squaredLength: T = ((x * x) + (y * y))
-  def length = sqrt(squaredLength)
-  def normalized = newVec(x / length, y / length)
-  def direction: Angle = Radian(math.atan2(num.toDouble(y), num.toDouble(x)))
-  def perpRight = newVec(y, num negate x)
-  def perpLeft = newVec(num negate y, num negate x)
-  def unary_- = newVec(num negate x, num negate y)
-  def rotated(angle: Angle) = {
+  def length = mathN.sqrt(squaredLength)
+  def normalized = new Vec2(x / length, y / length)
+  def direction: Angle[T] = Radian(mathN.atan2(y, x))
+  def perpRight = new Vec2(y, mathN negate x)
+  def perpLeft = new Vec2(mathN negate y, mathN negate x)
+  def unary_- = new Vec2(mathN negate x, mathN negate y)
+  def rotated(angle: Angle[T]) = {
     val rad = angle.radian
-    val c = fromDouble(math.cos(rad))
-    val s = fromDouble(math.sin(rad))
-    newVec(x * c - y * s, x * s + y * c)
+    val c = mathN.cos(rad)
+    val s = mathN.sin(rad)
+    new Vec2(x * c - y * s, x * s + y * c)
   }
 
   def compare(other: Vec2[T]) =
-    num.tryCompare(length, other.length).get
+    mathN.tryCompare(length, other.length).get
 
   def ==(other: Vec2[T]) = x == other.x && y == other.y
 }

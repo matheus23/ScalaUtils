@@ -1,5 +1,7 @@
 package org.matheusdev.vecmath
 
+import org.matheusdev.numerics.MathNumeric
+
 /*
  * Created with IntelliJ IDEA.
  * Author: matheusdev
@@ -7,28 +9,22 @@ package org.matheusdev.vecmath
  * Time: 10:06 PM
  */
 object Angle {
-  val ToDegree = (180 / math.Pi)
-  val ToRadian = (math.Pi / 180)
-
-  implicit def radianToDegree(r: Radian) = r.toDegree
-  implicit def degreeToRadian(d: Degree) = d.toRadian
-  implicit def angleToDegree(a: Angle) = a.toDegree
-  implicit def angleToRadian(a: Angle) = a.toRadian
+  implicit def radianToDegree[T](r: Radian[T]) = r.toDegree
+  implicit def degreeToRadian[T](d: Degree[T]) = d.toRadian
+  implicit def angleToDegree[T](a: Angle[T]) = a.toDegree
+  implicit def angleToRadian[T](a: Angle[T]) = a.toRadian
 }
-sealed trait Angle {
-  def value: Double
-  def toRadian: Radian
-  def toDegree: Degree
-  def radian = toRadian.value
-  def degree = toDegree.value
+sealed trait Angle[T] {
+  def toRadian: Radian[T]
+  def toDegree: Degree[T]
+  def radian = toRadian.angle
+  def degree = toDegree.angle
 }
-case class Radian(angle: Double) extends Angle {
-  def value = angle
+case class Radian[T](angle: T)(implicit mathN: MathNumeric[T]) extends Angle[T] {
   def toRadian = this
-  def toDegree = Degree(angle * Angle.ToDegree)
+  def toDegree = Degree(mathN.toDegrees(angle))
 }
-case class Degree(angle: Double) extends Angle {
-  def value = angle
-  def toRadian = Radian(angle * Angle.ToRadian)
+case class Degree[T](angle: T)(implicit mathN: MathNumeric[T]) extends Angle[T] {
+  def toRadian = Radian(mathN.toRadians(angle))
   def toDegree = this
 }

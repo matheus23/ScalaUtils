@@ -1,7 +1,6 @@
 package org.matheusdev.vecmath
 
-import scala.math.Numeric.Implicits._
-import scala.Fractional
+import org.matheusdev.numerics.MathNumeric
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,41 +8,37 @@ import scala.Fractional
  * Date: 4/26/13
  * Time: 4:35 PM
  */
-abstract class Mat3[@specialized(Int, Long, Float, Double) T](private val v: IndexedSeq[T])(implicit num: Fractional[T]) {
+class Mat3[@specialized(Byte, Short, Int, Long, Float, Double) T](private val v: IndexedSeq[T])(implicit mathN: MathNumeric[T]) {
   if (v.length != 9)
     throw new IllegalArgumentException(s"Cannot create 3x3 matrix with other than 9 values: $v")
 
-  type self
+  import mathN.mkMathNumericOps
 
-  def this(vs: T*)(implicit num: Fractional[T]) = this(vs.toIndexedSeq)
   def this(m00: T, m01: T, m02: T,
            m10: T, m11: T, m12: T,
            m20: T, m21: T, m22: T)
-          (implicit num: Fractional[T]) =
+          (implicit num: MathNumeric[T]) =
     this(IndexedSeq(
       m00, m01, m02,
       m10, m11, m12,
       m20, m21, m22
     ))
-  def this()(implicit num: Fractional[T]) = this(
+  def this()(implicit num: MathNumeric[T]) = this(
     num.one,  num.zero, num.zero,
     num.zero, num.one,  num.zero,
     num.zero, num.zero, num.one)
 
-  protected def newMat(vs: IndexedSeq[T]): self
-  protected def newMat(vs: T*): self = newMat(vs.toIndexedSeq)
+  def val00 = v(0)
+  def val01 = v(1)
+  def val02 = v(2)
 
-  def val00 = v(Mat3.m00)
-  def val01 = v(Mat3.m01)
-  def val02 = v(Mat3.m02)
+  def val10 = v(3)
+  def val11 = v(4)
+  def val12 = v(5)
 
-  def val10 = v(Mat3.m10)
-  def val11 = v(Mat3.m11)
-  def val12 = v(Mat3.m12)
-
-  def val20 = v(Mat3.m20)
-  def val21 = v(Mat3.m21)
-  def val22 = v(Mat3.m22)
+  def val20 = v(6)
+  def val21 = v(7)
+  def val22 = v(8)
 
   def apply(ind: Int): T = apply(ind, 0)
   def apply(x: Int, y: Int) = {
@@ -54,41 +49,38 @@ abstract class Mat3[@specialized(Int, Long, Float, Double) T](private val v: Ind
       throw new IndexOutOfBoundsException(s"Index out of 3x3 bounds: $index (x: $x, y: $y)")
   }
 
-  def transposed = newMat(IndexedSeq(
+  def transposed = new Mat3(
     val00, val10, val20,
     val01, val11, val21,
     val02, val12, val22
-  ))
-
-  import Numeric.Implicits._
-  import num.mkNumericOps
+  )
 
   def determinant =
     val00 * (val11 * val22 - val12 * val21) +
     val01 * (val12 * val20 - val10 * val22) +
     val02 * (val10 * val21 - val11 * val20)
 
-  def inverted : Option[self] = {
+  def inverted : Option[Mat3[T]] = {
     val determ = determinant
-    if (determ == num.zero)
+    if (determ == mathN.zero)
       None
     else {
-      val invDeterm = num.one / determ
-      Some(newMat(IndexedSeq(
+      val invDeterm = mathN.one / determ
+      Some(new Mat3(IndexedSeq(
                   (val11 * val22 - val12 * val21) * invDeterm,
-        num.negate(val10 * val22 + val12 * val20) * invDeterm,
+        mathN.negate(val10 * val22 + val12 * val20) * invDeterm,
                   (val10 * val21 - val11 * val20) * invDeterm,
-        num.negate(val01 * val22 + val02 * val21) * invDeterm,
+        mathN.negate(val01 * val22 + val02 * val21) * invDeterm,
                   (val00 * val22 - val02 * val20) * invDeterm,
-        num.negate(val00 * val21 + val01 * val20) * invDeterm,
+        mathN.negate(val00 * val21 + val01 * val20) * invDeterm,
                   (val01 * val12 - val02 * val11) * invDeterm,
-        num.negate(val00 * val12 + val02 * val10) * invDeterm,
+        mathN.negate(val00 * val12 + val02 * val10) * invDeterm,
                   (val00 * val11 - val01 * val10) * invDeterm
       )))
     }
   }
 
-  def *(mat: Mat3[T]) = newMat(IndexedSeq(
+  def *(mat: Mat3[T]) = new Mat3(IndexedSeq(
     val00 * mat.val00 + val10 * mat.val01 + val20 * mat.val02,
     val01 * mat.val00 + val11 * mat.val01 + val21 * mat.val02,
     val02 * mat.val00 + val12 * mat.val01 + val22 * mat.val02,
@@ -102,26 +94,14 @@ abstract class Mat3[@specialized(Int, Long, Float, Double) T](private val v: Ind
 
   def *(vec: Vec3[T]) = scaled(vec.x, vec.y, vec.z)
 
-  def +(mat: Mat3[T]) = newMat(for (i <- v.indices) yield v(i) * mat(i))
+  def +(mat: Mat3[T]) = new Mat3(for (i <- v.indices) yield v(i) * mat(i))
 
-  def scaled(x: T, y: T, z: T) = newMat(IndexedSeq(
+  def scaled(x: T, y: T, z: T) = new Mat3(IndexedSeq(
     val00 * x, val01 * y, val02 * z,
     val10 * x, val11 * y, val12 * z,
     val20 * x, val21 * y, val22 * z
   ))
 
-  def unary_- = newMat(v map (value => num.negate(value)))
+  def unary_- = new Mat3(v map (value => mathN.negate(value)))
 
-}
-
-object Mat3 extends Enumeration {
-  val m00 = 0
-  val m01 = 1
-  val m02 = 2
-  val m10 = 3
-  val m11 = 4
-  val m12 = 5
-  val m20 = 6
-  val m21 = 7
-  val m22 = 8
 }

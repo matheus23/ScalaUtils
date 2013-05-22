@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import scala.Fractional
+import org.matheusdev.numerics.MathNumeric
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,55 +9,48 @@ import scala.Fractional
  * Time: 8:34 PM
  */
 
-abstract class Vec4[@specialized(Int, Long, Float, Double) T](val x: T, val y: T, val z: T, val w: T)(implicit num: Fractional[T])
+class Vec4[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val y: T, val z: T, val w: T)(implicit mathN: MathNumeric[T])
     extends Ordered[Vec4[T]] {
-  def this(vec: Vec4[T])(implicit num: Fractional[T]) = this(vec.x, vec.y, vec.z, vec.w)
+  def this(vec: Vec4[T])(implicit num: MathNumeric[T]) = this(vec.x, vec.y, vec.z, vec.w)
 
-  type self
-  protected def sqrt(x: T): T
-  protected def newVec(x: T, y: T, z: T, w: T): self
-  protected def typeName: String
-  protected def fromDouble(d: Double): T
-
-  import Numeric.Implicits._
-  import num.mkNumericOps
+  import mathN.mkMathNumericOps
 
   def toTuple = (x, y, z, w)
-  override def toString = s"Vec4[$typeName]($x, $y, $z, $w)"
+  override def toString = s"Vec4($x, $y, $z, $w)"
 
-  def +(v: Vec4[T]) = newVec(x + v.x, y + v.y, z + v.z, w + v.w)
-  def -(v: Vec4[T]) = newVec(x - v.x, y - v.y, z - v.z, w - v.w)
-  def *(v: Vec4[T]) = newVec(x * v.x, y * v.y, z * v.z, w * v.w)
-  def /(v: Vec4[T]) = newVec(x / v.x, y / v.y, z / v.z, w / v.w)
+  def +(v: Vec4[T]) = new Vec4(x + v.x, y + v.y, z + v.z, w + v.w)
+  def -(v: Vec4[T]) = new Vec4(x - v.x, y - v.y, z - v.z, w - v.w)
+  def *(v: Vec4[T]) = new Vec4(x * v.x, y * v.y, z * v.z, w * v.w)
+  def /(v: Vec4[T]) = new Vec4(x / v.x, y / v.y, z / v.z, w / v.w)
   def dot(v: Vec4[T]) = x * v.x + y * v.y + z * v.z + w * v.w
-//  def cross(v: Vec4[T]) = newVec(
+//  def cross(v: Vec4[T]) = new Vec4(
 //    y * v.z - z * v.y,
 //    v.x * z - v.z * x,
 //    x * v.y - y * v.x,
 //  )
 
-  def +(v: T) = newVec(x + v, y + v, z + v, w + v)
-  def -(v: T) = newVec(x - v, y - v, z - v, w - v)
-  def *(v: T) = newVec(x * v, y * v, z * v, w * v)
-  def /(v: T) = newVec(x / v, y / v, z / v, w / v)
+  def +(v: T) = new Vec4(x + v, y + v, z + v, w + v)
+  def -(v: T) = new Vec4(x - v, y - v, z - v, w - v)
+  def *(v: T) = new Vec4(x * v, y * v, z * v, w * v)
+  def /(v: T) = new Vec4(x / v, y / v, z / v, w / v)
 
-  def *(mat: Mat3[T]) = newVec(
+  def *(mat: Mat3[T]) = new Vec4(
     mat.val00 * x + mat.val10 * y + mat.val20 * z,
     mat.val01 * x + mat.val11 * y + mat.val21 * z,
     mat.val02 * x + mat.val12 * y + mat.val22 * z,
-    num.one
+    mathN.one
   )
 
   def squaredLength: T = ((x * x) + (y * y) + (z * z) + (w * w))
-  def length = sqrt(squaredLength)
+  def length = mathN.sqrt(squaredLength)
   def normalized = {
     val l = length
-    newVec(x / l, y / l, z / l, w / l)
+    new Vec4(x / l, y / l, z / l, w / l)
   }
-  def unary_- = newVec(num negate x, num negate y, num negate z, num negate w)
+  def unary_- = new Vec4(-x, -y, -z, -w)
 
   def compare(other: Vec4[T]) =
-    num.tryCompare(length, other.length).get
+    mathN.tryCompare(length, other.length).get
 
   def ==(other: Vec4[T]) =
     x == other.x && y == other.y && z == other.z && w == other.w
