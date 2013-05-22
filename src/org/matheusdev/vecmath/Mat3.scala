@@ -8,10 +8,10 @@ import org.matheusdev.numerics.MathFractional
  * Date: 4/26/13
  * Time: 4:35 PM
  */
-class Mat3[@specialized(Float, Double) T]
-  (val m00: T, val m01: T, val m02: T,
-   val m10: T, val m11: T, val m12: T,
-   val m20: T, val m21: T, val m22: T)(implicit mathN: MathFractional[T]) {
+case class Mat3[@specialized(Float, Double) T]
+  (m00: T, m01: T, m02: T,
+   m10: T, m11: T, m12: T,
+   m20: T, m21: T, m22: T)(implicit mathN: MathFractional[T]) {
   import mathN.mkMathFractionalOps
 
   def this()(implicit num: MathFractional[T]) = this(
@@ -46,7 +46,7 @@ class Mat3[@specialized(Float, Double) T]
   private def xOut(x: Int) = throw new IndexOutOfBoundsException(s"x index out of 3x3 matrix range: $x")
   private def yOut(y: Int) = throw new IndexOutOfBoundsException(s"y index out of 3x3 matrix range: $y")
 
-  def transposed = new Mat3(
+  def transposed = Mat3(
     m00, m10, m20,
     m01, m11, m21,
     m02, m12, m22
@@ -63,7 +63,7 @@ class Mat3[@specialized(Float, Double) T]
       None
     else {
       val invDeterm = mathN.one / determ
-      Some(new Mat3(
+      Some(Mat3(
                     (m11 * m22 - m12 * m21) * invDeterm,
         mathN.negate(m10 * m22 + m12 * m20) * invDeterm,
                     (m10 * m21 - m11 * m20) * invDeterm,
@@ -77,7 +77,7 @@ class Mat3[@specialized(Float, Double) T]
     }
   }
 
-  def *(mat: Mat3[T]) = new Mat3(
+  def *(mat: Mat3[T]) = Mat3(
     m00 * mat.m00 + m10 * mat.m01 + m20 * mat.m02,
     m01 * mat.m00 + m11 * mat.m01 + m21 * mat.m02,
     m02 * mat.m00 + m12 * mat.m01 + m22 * mat.m02,
@@ -91,19 +91,19 @@ class Mat3[@specialized(Float, Double) T]
 
   def *(vec: Vec3[T]) = scaled(vec.x, vec.y, vec.z)
 
-  def +(mat: Mat3[T]) = new Mat3(
+  def +(mat: Mat3[T]) = Mat3(
     m00 + m00, m01 + m01, m02 + m02,
     m10 + m10, m11 + m11, m12 + m12,
     m20 + m20, m21 + m21, m22 + m22
   )
 
-  def scaled(x: T, y: T, z: T) = new Mat3(
+  def scaled(x: T, y: T, z: T) = Mat3(
     m00 * x, m01 * y, m02 * z,
     m10 * x, m11 * y, m12 * z,
     m20 * x, m21 * y, m22 * z
   )
 
-  def unary_- = new Mat3(
+  def unary_- = Mat3(
     -m00, -m01, -m02,
     -m10, -m11, -m12,
     -m20, -m21, -m22
