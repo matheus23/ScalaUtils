@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import org.matheusdev.numerics.MathNumeric
+import org.matheusdev.numerics.MathFractional
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,10 +9,10 @@ import org.matheusdev.numerics.MathNumeric
  * Time: 8:34 PM
  */
 
-class Vec2[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val y: T)(implicit mathN: MathNumeric[T]) extends Ordered[Vec2[T]] {
-  def this(vec: Vec2[T])(implicit mathN: MathNumeric[T]) = this(vec.x, vec.y)
+class Vec2[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val y: T)(implicit mathN: MathFractional[T]) extends Ordered[Vec2[T]] {
+  def this(vec: Vec2[T])(implicit mathN: MathFractional[T]) = this(vec.x, vec.y)
 
-  import mathN.mkMathNumericOps
+  import mathN.mkMathFractionalOps
 
   def toTuple = (x, y)
   override def toString = s"Vec2($x, $y)"

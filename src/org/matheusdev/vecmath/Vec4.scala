@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import org.matheusdev.numerics.MathNumeric
+import org.matheusdev.numerics.MathFractional
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,11 +9,11 @@ import org.matheusdev.numerics.MathNumeric
  * Time: 8:34 PM
  */
 
-class Vec4[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val y: T, val z: T, val w: T)(implicit mathN: MathNumeric[T])
+class Vec4[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val y: T, val z: T, val w: T)(implicit mathN: MathFractional[T])
     extends Ordered[Vec4[T]] {
-  def this(vec: Vec4[T])(implicit num: MathNumeric[T]) = this(vec.x, vec.y, vec.z, vec.w)
+  def this(vec: Vec4[T])(implicit num: MathFractional[T]) = this(vec.x, vec.y, vec.z, vec.w)
 
-  import mathN.mkMathNumericOps
+  import mathN.mkMathFractionalOps
 
   def toTuple = (x, y, z, w)
   override def toString = s"Vec4($x, $y, $z, $w)"
@@ -35,9 +35,9 @@ class Vec4[@specialized(Byte, Short, Int, Long, Float, Double) T](val x: T, val 
   def /(v: T) = new Vec4(x / v, y / v, z / v, w / v)
 
   def *(mat: Mat3[T]) = new Vec4(
-    mat.val00 * x + mat.val10 * y + mat.val20 * z,
-    mat.val01 * x + mat.val11 * y + mat.val21 * z,
-    mat.val02 * x + mat.val12 * y + mat.val22 * z,
+    mat.m00 * x + mat.m10 * y + mat.m20 * z,
+    mat.m01 * x + mat.m11 * y + mat.m21 * z,
+    mat.m02 * x + mat.m12 * y + mat.m22 * z,
     mathN.one
   )
 

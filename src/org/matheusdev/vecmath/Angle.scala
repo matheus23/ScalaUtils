@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import org.matheusdev.numerics.MathNumeric
+import org.matheusdev.numerics.MathFractional
 
 /*
  * Created with IntelliJ IDEA.
@@ -20,11 +20,11 @@ sealed trait Angle[T] {
   def radian = toRadian.angle
   def degree = toDegree.angle
 }
-case class Radian[T](angle: T)(implicit mathN: MathNumeric[T]) extends Angle[T] {
+case class Radian[T](angle: T)(implicit mathN: MathFractional[T]) extends Angle[T] {
   def toRadian = this
   def toDegree = Degree(mathN.toDegrees(angle))
 }
-case class Degree[T](angle: T)(implicit mathN: MathNumeric[T]) extends Angle[T] {
+case class Degree[T](angle: T)(implicit mathN: MathFractional[T]) extends Angle[T] {
   def toRadian = Radian(mathN.toRadians(angle))
   def toDegree = this
 }
