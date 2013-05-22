@@ -6,7 +6,6 @@ package org.matheusdev.collections.mapping2d
  * Date: 5/4/13
  * Time: 9:53 PM
  */
-// Yet, test results fail...
 class ClusteredMapping2(
   val width: Int,
   val height: Int,
