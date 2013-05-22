@@ -6,7 +6,10 @@ package org.matheusdev.numerics
  * Date: 5/22/13
  * Time: 4:18 PM
  */
-trait StringIsMathNumeric extends MathNumeric[String] {
+trait StringIsMathFractional extends MathFractional[String] {
+  val Pi = "Pi"
+  val E = "E"
+
   def acos(x: String) = s"acos($x)"
   def asin(x: String) = s"asin($x)"
   def atan(x: String) = s"atan($x)"
@@ -53,6 +56,6 @@ trait StringIsMathNumeric extends MathNumeric[String] {
   def toDouble(x: String) = 0
 }
 
-object StringIsMathNumeric {
-  implicit object StringMathNumeric extends StringIsMathNumeric with Ordering.StringOrdering
+object StringIsMathFractional {
+  implicit object StringMathFractional extends StringIsMathFractional with Ordering.StringOrdering
 }
