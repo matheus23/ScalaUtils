@@ -78,7 +78,7 @@ Before running this example, create a new file named "file.txt" in the working d
 Then run the example and while it runs, edit the file content (remember to save) and you'll see it update
 automatically!
 
-### AnimationProperty
+### AnimationProperty<Float/Double>
 <hr />
 
 This property is used very frequently by myself. It can be used to add easing animations to UI's or it can be used to
@@ -89,7 +89,7 @@ and the type of interpolation to use.
 
 ```scala
 // Create the property:
-val property = new Property[Float](0f) with AnimationProperty
+val property = new Property[Float](0f) with AnimationPropertyFloat
 property.period = 1000 // 1 second animation period
 property.interpolator = Linear // In org.matheusdev.interpolators._
 property(20)
