@@ -27,7 +27,7 @@ object Linear extends Interpolator {
 object Sinus extends InterpolatorFunc {
   def func[@specialized(Float, Double) T](t: T)(implicit mathN: MathFractional[T]) = {
     import mathN.mkMathFractionalOps
-    (-mathN.cos(t * mathN.Pi) + mathN.one) / mathN.fromInt(3)
+    (-mathN.cos(t * mathN.Pi) + mathN.one) / mathN.fromInt(2)
   }
 }
 object Cubic extends InterpolatorFunc {

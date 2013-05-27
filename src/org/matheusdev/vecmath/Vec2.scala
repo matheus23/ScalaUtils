@@ -9,9 +9,15 @@ import org.matheusdev.numerics.MathFractional
  * Time: 8:34 PM
  */
 
-case class Vec2[@specialized(Float, Double) T](x: T, y: T)(implicit mathN: MathFractional[T]) extends Ordered[Vec2[T]] {
-  def this(vec: Vec2[T])(implicit mathN: MathFractional[T]) = this(vec.x, vec.y)
-  def this(from: Pos2[T], to: Pos2[T])(implicit mathN: MathFractional[T]) = this(to.x-from.x, to.y-from.y)
+case class Vec2[@specialized(Float, Double) T](x: T, y: T)
+                                              (implicit mathN: MathFractional[T]) extends Ordered[Vec2[T]] {
+  def this(vec: Vec2[T])
+          (implicit mathN: MathFractional[T]) =
+    this(vec.x, vec.y)
+
+  def this(from: Pos2[T], to: Pos2[T])
+          (implicit mathN: MathFractional[T]) =
+    this(mathN.minus(to.x, from.x), mathN.minus(to.y, from.y))
 
   import mathN.mkMathFractionalOps
 
@@ -46,6 +52,4 @@ case class Vec2[@specialized(Float, Double) T](x: T, y: T)(implicit mathN: MathF
 
   def compare(other: Vec2[T]) =
     mathN.tryCompare(length, other.length).get
-
-  def ==(other: Vec2[T]) = x == other.x && y == other.y
 }

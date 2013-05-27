@@ -1,6 +1,7 @@
 package org.matheusdev.vecmath
 
 import org.matheusdev.numerics.MathFractional
+import org.matheusdev.properties.Property
 
 /*
  * Created with IntelliJ IDEA.
@@ -33,7 +34,7 @@ case class Pos2[T](var x: T, var y: T)(implicit mathN: MathFractional[T]) {
   def -=(that: Vec2[T]) = { x -= that.x; y -= that.y; this }
   def *=(that: Vec2[T]) = { x *= that.x; y *= that.y; this }
   def /=(that: Vec2[T]) = { x /= that.x; y /= that.y; this }
-
+  
   def <->(that: Pos2[T]) = mathN.sqrt(distanceSq(that))
   def distanceSq(that: Pos2[T]) = {
     val dx = that.x - x
@@ -41,6 +42,6 @@ case class Pos2[T](var x: T, var y: T)(implicit mathN: MathFractional[T]) {
     dx * dx + dy * dy
   }
 
-  def rotationTo(that: Pos2[T]) = new Vec2[T](this, that).direction
-
+  def to(that: Pos2[T]) = new Vec2[T](this, that)
+  def rotationTo(that: Pos2[T]) = to(that).direction
 }

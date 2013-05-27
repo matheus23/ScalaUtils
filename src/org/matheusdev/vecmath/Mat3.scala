@@ -20,31 +20,26 @@ case class Mat3[@specialized(Float, Double) T]
     num.zero, num.zero, num.one)
 
   def apply(x: Int, y: Int) = {
-    x match {
-      case 0 => y match {
-        case 0 => m00
-        case 1 => m10
-        case 2 => m20
-        case _ => yOut(y)
-      }
-      case 1 => y match {
-        case 0 => m01
-        case 1 => m11
-        case 2 => m21
-        case _ => yOut(y)
-      }
-      case 2 => y match {
-        case 0 => m02
-        case 1 => m12
-        case 2 => m22
-        case _ => yOut(y)
-      }
-      case _ => xOut(x)
-    }
+    if (x == 0)
+      if      (y == 0) m00
+      else if (y == 1) m10
+      else if (y == 2) m20
+      else yErr(y)
+    else if (x == 1)
+      if      (y == 0) m01
+      else if (y == 1) m11
+      else if (y == 2) m21
+      else yErr(y)
+    else if (x == 2)
+      if      (y == 0) m02
+      else if (y == 1) m12
+      else if (y == 2) m22
+      else yErr(y)
+    else xErr(x)
   }
 
-  private def xOut(x: Int) = throw new IndexOutOfBoundsException(s"x index out of 3x3 matrix range: $x")
-  private def yOut(y: Int) = throw new IndexOutOfBoundsException(s"y index out of 3x3 matrix range: $y")
+  private def xErr(x: Int) = throw new IndexOutOfBoundsException(s"x index out of 3x3 matrix range: $x")
+  private def yErr(y: Int) = throw new IndexOutOfBoundsException(s"y index out of 3x3 matrix range: $y")
 
   def transposed = Mat3(
     m00, m10, m20,
