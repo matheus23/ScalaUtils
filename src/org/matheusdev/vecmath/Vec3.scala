@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import org.matheusdev.numerics.MathFractional
+import org.matheusdev.numerics.Floating
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,11 +9,11 @@ import org.matheusdev.numerics.MathFractional
  * Time: 8:34 PM
  */
 
-case class Vec3[@specialized(Float, Double) T](x: T, y: T, z: T)(implicit mathN: MathFractional[T])
+case class Vec3[@specialized(Float, Double) T](x: T, y: T, z: T)(implicit mathN: Floating[T])
     extends Ordered[Vec3[T]] {
-  def this(vec: Vec3[T])(implicit num: MathFractional[T]) = this(vec.x, vec.y, vec.z)
+  def this(vec: Vec3[T])(implicit num: Floating[T]) = this(vec.x, vec.y, vec.z)
 
-  import mathN.mkMathFractionalOps
+  import mathN.mkFloatingOps
 
   def toTuple = (x, y, z)
   override def toString = s"Vec3($x, $y, $z)"

@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import org.matheusdev.numerics.MathFractional
+import org.matheusdev.numerics.Floating
 
 /*
  * Created with IntelliJ IDEA.
@@ -11,10 +11,10 @@ import org.matheusdev.numerics.MathFractional
 case class Mat3[@specialized(Float, Double) T]
   (m00: T, m01: T, m02: T,
    m10: T, m11: T, m12: T,
-   m20: T, m21: T, m22: T)(implicit mathN: MathFractional[T]) {
-  import mathN.mkMathFractionalOps
+   m20: T, m21: T, m22: T)(implicit mathN: Floating[T]) {
+  import mathN.mkFloatingOps
 
-  def this()(implicit num: MathFractional[T]) = this(
+  def this()(implicit num: Floating[T]) = this(
     num.one,  num.zero, num.zero,
     num.zero, num.one,  num.zero,
     num.zero, num.zero, num.one)

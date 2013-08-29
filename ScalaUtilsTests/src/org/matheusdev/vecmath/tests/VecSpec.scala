@@ -49,7 +49,7 @@ class VecSpec extends FlatSpec with ShouldMatchers {
   }
 
   "A Vec2[String]" should "do very, very fun stuff!!! :D" in {
-    val vec = new Vec2[String]("x", "y")(org.matheusdev.numerics.StringIsMathFractional.StringMathFractional)
+    val vec = new Vec2[String]("x", "y")(org.matheusdev.numerics.StringIsFloating.StringFloating)
     (vec.normalized) should be
       ("Vec2(x / sqrt(x * x + y * y), y / sqrt(x * x + y * y))")
     ((vec.normalized * "scale").length) should be

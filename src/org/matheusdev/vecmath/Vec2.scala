@@ -1,6 +1,6 @@
 package org.matheusdev.vecmath
 
-import org.matheusdev.numerics.MathFractional
+import org.matheusdev.numerics.Floating
 
 /*
  * Created with IntelliJ IDEA.
@@ -10,16 +10,16 @@ import org.matheusdev.numerics.MathFractional
  */
 
 case class Vec2[@specialized(Float, Double) T](x: T, y: T)
-                                              (implicit mathN: MathFractional[T]) extends Ordered[Vec2[T]] {
+                                              (implicit mathN: Floating[T]) extends Ordered[Vec2[T]] {
   def this(vec: Vec2[T])
-          (implicit mathN: MathFractional[T]) =
+          (implicit mathN: Floating[T]) =
     this(vec.x, vec.y)
 
   def this(from: Pos2[T], to: Pos2[T])
-          (implicit mathN: MathFractional[T]) =
+          (implicit mathN: Floating[T]) =
     this(mathN.minus(to.x, from.x), mathN.minus(to.y, from.y))
 
-  import mathN.mkMathFractionalOps
+  import mathN.mkFloatingOps
 
   def toTuple = (x, y)
   override def toString = s"Vec2($x, $y)"

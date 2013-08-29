@@ -6,7 +6,7 @@ package org.matheusdev.numerics
  * Date: 5/22/13
  * Time: 4:18 PM
  */
-trait StringIsMathFractional extends MathFractional[String] {
+trait StringIsFloating extends Floating[String] {
   val Pi = "Pi"
   val E = "E"
 
@@ -56,6 +56,6 @@ trait StringIsMathFractional extends MathFractional[String] {
   def toDouble(x: String) = 0
 }
 
-object StringIsMathFractional {
-  implicit object StringMathFractional extends StringIsMathFractional with Ordering.StringOrdering
+object StringIsFloating {
+  implicit object StringFloating extends StringIsFloating with Ordering.StringOrdering
 }

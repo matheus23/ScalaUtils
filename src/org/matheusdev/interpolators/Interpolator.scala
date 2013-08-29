@@ -1,6 +1,6 @@
 package org.matheusdev.interpolators
 
-import org.matheusdev.numerics.MathFractional
+import org.matheusdev.numerics.Floating
 
 /*
  * Created with IntelliJ IDEA.
@@ -9,30 +9,30 @@ import org.matheusdev.numerics.MathFractional
  * Time: 10:32 PM
  */
 trait Interpolator {
-  def apply[T](a: T, b: T, t: T)(implicit mathN: MathFractional[T]): T
+  def apply[T](a: T, b: T, t: T)(implicit mathN: Floating[T]): T
 }
 trait InterpolatorFunc extends Interpolator {
-  def apply[@specialized(Float, Double) T](a: T, b: T, t: T)(implicit mathN: MathFractional[T]) = {
-    import mathN.mkMathFractionalOps
+  def apply[@specialized(Float, Double) T](a: T, b: T, t: T)(implicit mathN: Floating[T]) = {
+    import mathN.mkFloatingOps
     func(t) * (b - a) + a
   }
-  def func[T](t: T)(implicit mathN: MathFractional[T]): T
+  def func[T](t: T)(implicit mathN: Floating[T]): T
 }
 object Linear extends Interpolator {
-  def apply[T](a: T, b: T, t: T)(implicit mathN: MathFractional[T]) = {
-    import mathN.mkMathFractionalOps
+  def apply[T](a: T, b: T, t: T)(implicit mathN: Floating[T]) = {
+    import mathN.mkFloatingOps
     (a * t) + (b * (mathN.one - t))
   }
 }
 object Sinus extends InterpolatorFunc {
-  def func[@specialized(Float, Double) T](t: T)(implicit mathN: MathFractional[T]) = {
-    import mathN.mkMathFractionalOps
+  def func[@specialized(Float, Double) T](t: T)(implicit mathN: Floating[T]) = {
+    import mathN.mkFloatingOps
     (-mathN.cos(t * mathN.Pi) + mathN.one) / mathN.fromInt(2)
   }
 }
 object Cubic extends InterpolatorFunc {
-  def func[@specialized(Float, Double) T](t: T)(implicit mathN: MathFractional[T]) = {
-    import mathN.mkMathFractionalOps
+  def func[@specialized(Float, Double) T](t: T)(implicit mathN: Floating[T]) = {
+    import mathN.mkFloatingOps
 
     (t * t) * (mathN.fromInt(3) - mathN.fromInt(2) * t)
   }

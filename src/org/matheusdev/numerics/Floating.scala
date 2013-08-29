@@ -2,58 +2,14 @@ package org.matheusdev.numerics
 
 import scala.math.Numeric._
 
-object MathFractional {
+object Floating {
   trait ExtraImplicits {
-    implicit def infixMathNumericOps[T](x: T)(implicit num: MathFractional[T]): MathFractional[T]#MathFractionalOps =
-      new num.MathFractionalOps(x)
+    implicit def infixFloatingOps[T](x: T)(implicit num: Floating[T]): Floating[T]#FloatingOps =
+      new num.FloatingOps(x)
   }
   object Implicits extends ExtraImplicits
   
-  @deprecated("This is currently a stub, only to make it possible. It casts to doubles and back to BigDecimals, which are not exact operations.")
-  trait BigDecimalIsMathFractional extends MathFractional[BigDecimal] {
-    val Pi = BigDecimal(math.Pi)
-    val E = BigDecimal(math.E)
-
-    def acos(x: BigDecimal) = BigDecimal(math.acos(x.doubleValue()))
-    def asin(x: BigDecimal) = BigDecimal(math.asin(x.doubleValue()))
-    def atan(x: BigDecimal) = BigFunctions.arctan(x.bigDecimal, 1)
-    def atan2(x: BigDecimal, y: BigDecimal) = BigDecimal(math.atan2(x.doubleValue(), y.doubleValue()))
-    def sin(x: BigDecimal) = BigDecimal(math.sin(x.doubleValue()))
-    def sinh(x: BigDecimal) = BigDecimal(math.sinh(x.doubleValue()))
-    def cos(x: BigDecimal) = BigDecimal(math.cos(x.doubleValue()))
-    def cosh(x: BigDecimal) = BigDecimal(math.cosh(x.doubleValue()))
-    def tan(x: BigDecimal) = BigDecimal(math.tan(x.doubleValue()))
-    def tanh(x: BigDecimal) = BigDecimal(math.tanh(x.doubleValue()))
-    def cbrt(x: BigDecimal) = BigDecimal(math.cbrt(x.doubleValue()))
-    def ceil(x: BigDecimal) = BigDecimal(math.ceil(x.doubleValue()))
-    def exp(x: BigDecimal) = BigFunctions.exp(x.bigDecimal, 1)
-    def expm1(x: BigDecimal) = BigDecimal(math.expm1(x.doubleValue()))
-    def floor(x: BigDecimal) = BigDecimal(math.floor(x.doubleValue()))
-    def hypot(x: BigDecimal, y: BigDecimal) = BigDecimal(math.hypot(x.doubleValue(), y.doubleValue()))
-    def log(x: BigDecimal) = BigFunctions.ln(x.bigDecimal, 1)
-    def log10(x: BigDecimal) = BigFunctions.ln(x.bigDecimal, 1)
-    def log1p(x: BigDecimal) = BigFunctions.ln((x + 1).bigDecimal, 1)
-    def pow(x: BigDecimal, y: BigDecimal) = BigDecimal(math.pow(x.doubleValue(), y.doubleValue()))
-    def rint(x: BigDecimal) = BigDecimal(math.rint(x.doubleValue()))
-    def round(x: BigDecimal) = x.round(x.mc)
-    def sqrt(x: BigDecimal) = BigFunctions.sqrt(x.bigDecimal, 1)
-    def toDegrees(x: BigDecimal) = x * BigDecimalIsMathFractional.toDegree
-    def toRadians(x: BigDecimal) = x * BigDecimalIsMathFractional.toRadians
-    def ulp(x: BigDecimal) = x.ulp
-    
-    def fromByte(x: Byte) = BigDecimal(x)
-    def fromShort(x: Short) = BigDecimal(x)
-    def fromChar(x: Char) = BigDecimal(x)
-    def fromLong(x: Long) = BigDecimal(x)
-    def fromFloat(x: Float) = BigDecimal(x)
-    def fromDouble(x: Double) = BigDecimal(x)
-  }
-  implicit object BigDecimalIsMathFractional extends BigDecimalIsMathFractional with BigDecimalIsFractional with Ordering.BigDecimalOrdering {
-    private val toDegree = BigDecimal(180) / BigDecimal(math.Pi)
-    private val toRadians = BigDecimal(math.Pi) / BigDecimal(180)
-  }
-  
-  trait FloatIsMathFractional extends MathFractional[Float] {
+  trait FloatIsFloating extends Floating[Float] {
     val Pi = math.Pi.toFloat
     val E = math.E.toFloat
 
@@ -91,9 +47,9 @@ object MathFractional {
     def fromFloat(x: Float) = x
     def fromDouble(x: Double) = x.toFloat
   }
-  implicit object FloatIsMathFractional extends FloatIsMathFractional with FloatIsFractional with Ordering.FloatOrdering
+  implicit object FloatIsFloating extends FloatIsFloating with FloatIsFractional with Ordering.FloatOrdering
 
-  trait DoubleIsMathFractional extends MathFractional[Double] {
+  trait DoubleIsFloating extends Floating[Double] {
     val Pi = math.Pi
     val E = math.E
 
@@ -131,10 +87,10 @@ object MathFractional {
     def fromFloat(x: Float) = x.toDouble
     def fromDouble(x: Double) = x
   }
-  implicit object DoubleIsMathFractional extends DoubleIsMathFractional with DoubleIsFractional with Ordering.DoubleOrdering
+  implicit object DoubleIsFloating extends DoubleIsFloating with DoubleIsFractional with Ordering.DoubleOrdering
 }
 
-trait MathFractional[T] extends Fractional[T] {
+trait Floating[T] extends Fractional[T] {
   val Pi: T
   val E: T
 
@@ -173,10 +129,10 @@ trait MathFractional[T] extends Fractional[T] {
   def fromFloat(x: Float): T
   def fromDouble(x: Double): T
 
-  class MathFractionalOps(lhs: T) extends Ops(lhs) {
+  class FloatingOps(lhs: T) extends Ops(lhs) {
     def /(rhs: T) = div(lhs, rhs)
   }
-  implicit def mkMathFractionalOps(lhs: T) =
-    new MathFractionalOps(lhs)
+  implicit def mkFloatingOps(lhs: T) =
+    new FloatingOps(lhs)
 
 }
